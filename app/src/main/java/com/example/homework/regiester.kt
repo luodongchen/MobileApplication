@@ -1,16 +1,20 @@
 package com.example.homework
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 
-class RegistrationActivity : AppCompatActivity() {
+class register : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_regiester)
 
         val etFullName = findViewById<EditText>(R.id.etFullName)
         val etEmail = findViewById<EditText>(R.id.etEmail)
@@ -31,6 +35,14 @@ class RegistrationActivity : AppCompatActivity() {
                 Toast.makeText(this, "Registration data submitted", Toast.LENGTH_SHORT).show()
 
             }
+        }
+        setContentView(R.layout.activity_regiester)
+
+        val tvGoToLogin = findViewById<TextView>(R.id.tvGoToLogin)
+        tvGoToLogin.setOnClickListener {
+
+            val intent = Intent(this, login::class.java)
+            startActivity(intent)
         }
     }
 }
