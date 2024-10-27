@@ -14,7 +14,7 @@ class register : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_regiester)
+        setContentView(R.layout.activity_register)
 
         val etFullName = findViewById<EditText>(R.id.etFullName)
         val etEmail = findViewById<EditText>(R.id.etEmail)
@@ -36,7 +36,6 @@ class register : AppCompatActivity() {
 
             }
         }
-        setContentView(R.layout.activity_regiester)
 
         val tvGoToLogin = findViewById<TextView>(R.id.tvGoToLogin)
         tvGoToLogin.setOnClickListener {
