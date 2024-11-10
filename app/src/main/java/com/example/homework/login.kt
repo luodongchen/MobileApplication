@@ -10,13 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 
 class Login : AppCompatActivity() {
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        val tvGoToRegister = findViewById<TextView>(R.id.tvGoToRegister)
+        val tvGoToRegister = findViewById<TextView>(R.id.tv_go_to_register)
         tvGoToRegister.setOnClickListener {
 
-            val intent = Intent(this, Login::class.java)
+            val intent = Intent(this, Register::class.java)
             startActivity(intent)
         }
     }
