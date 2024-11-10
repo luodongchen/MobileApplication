@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 
-class register : AppCompatActivity() {
+class Register : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class register : AppCompatActivity() {
         val tvGoToLogin = findViewById<TextView>(R.id.tvGoToLogin)
         tvGoToLogin.setOnClickListener {
 
-            val intent = Intent(this, login::class.java)
+            val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
     }
