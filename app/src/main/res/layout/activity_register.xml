@@ -7,6 +7,9 @@
     android:visibility="visible"
     tools:context=".Register">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageView"
@@ -113,15 +116,16 @@
 
     <CheckBox
         android:id="@+id/checkbox_term"
-        android:layout_width="241dp"
-        android:layout_height="10dp"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="532dp"
-        android:lineHeight="10.35dp"
+        android:lineHeight="16.88dp"
         android:text="By checking the box you agree to our Terms and Conditions."
-        android:textSize="9dp"
+        android:textSize="16dp"
 
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
@@ -152,6 +156,8 @@
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    </RelativeLayout>
 
 
 
