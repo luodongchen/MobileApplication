@@ -69,15 +69,15 @@
 
         <CheckBox
             android:id="@+id/checkbox_remember_me"
-            android:layout_width="60dp"
-            android:layout_height="10dp"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
             android:text="Remember me"
-            android:textSize="9sp"
+            android:textSize="16sp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="48dp"
             android:layout_marginTop="467dp"
-            android:lineHeight="10.35dp"/>
+            android:lineHeight="16.35dp"/>
 
 
     <TextView
@@ -118,6 +118,7 @@
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 
 
