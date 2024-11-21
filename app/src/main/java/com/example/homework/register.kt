@@ -9,45 +9,78 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
+import android.text.TextUtils
 import android.util.Patterns
+import android.widget.CheckBox
+
 
 
 class Register : AppCompatActivity() {
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val etFullName = findViewById<EditText>(R.id.et_username)
-        val etEmail = findViewById<EditText>(R.id.et_email)
-        val etPhone = findViewById<EditText>(R.id.et_number)
-        val etPassword = findViewById<EditText>(R.id.et_password)
-        val btnContinue = findViewById<Button>(R.id.btn_register)
+        // Initialize views
+        val usernameEditText = findViewById<EditText>(R.id.et_username)
+        val emailEditText = findViewById<EditText>(R.id.et_email)
+        val phoneEditText = findViewById<EditText>(R.id.et_number)
+        val passwordEditText = findViewById<EditText>(R.id.et_password)
+        val termsCheckBox = findViewById<CheckBox>(R.id.checkbox_term)
+        val registerButton = findViewById<Button>(R.id.btn_register)
+        val loginTextView = findViewById<TextView>(R.id.tv_go_to_login)
 
-        btnContinue.setOnClickListener {
-            val fullName = etFullName.text.toString().trim()
-            val email = etEmail.text.toString().trim()
-            val phone = etPhone.text.toString().trim()
-            val password = etPassword.text.toString().trim()
+        // Handle Register Button Click
+        registerButton.setOnClickListener {
+            val username = usernameEditText.text.toString().trim()
+            val email = emailEditText.text.toString().trim()
+            val phone = phoneEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
 
-            if (fullName.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
-            } else {
+            // Validate inputs
+            if (validateInputs(username, email, phone, password, termsCheckBox.isChecked)) {
+                Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show()
 
-                Toast.makeText(this, "Registration data submitted", Toast.LENGTH_SHORT).show()
-
+                // Navigate to the login screen or next step
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
+                finish()
             }
         }
 
-        val tvGoToLogin = findViewById<TextView>(R.id.tv_go_to_login)
-        tvGoToLogin.setOnClickListener {
-
+        // Navigate to Login Screen
+        loginTextView.setOnClickListener {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
 
 
+    // Function to validate inputs
+    private fun validateInputs(username: String, email: String, phone: String, password: String, termsAccepted: Boolean): Boolean {
+        if (TextUtils.isEmpty(username)) {
+            Toast.makeText(this, "Please enter your full name", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (TextUtils.isEmpty(email) || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (TextUtils.isEmpty(phone) || phone.length != 10 || !phone.all { it.isDigit() }) {
+            Toast.makeText(this, "Please enter a valid 10-digit phone number", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (TextUtils.isEmpty(password) || password.length < 8) {
+            Toast.makeText(this, "Password must be at least 8 characters long", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (!termsAccepted) {
+            Toast.makeText(this, "You must agree to the Terms and Conditions", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
 }
+
