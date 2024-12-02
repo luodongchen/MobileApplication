@@ -55,5 +55,5 @@ class CredentialsManagerTest {
 
         assertEquals(true, isPasswordValid)
     }
-}
 
+}
