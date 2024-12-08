@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -14,10 +15,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Fragment_a.newInstance] factory method to
+ * Use the [RegisterFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Fragment_a : Fragment() {
+class RegisterFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,17 +35,19 @@ class Fragment_a : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_a, container, false)
-        val button: Button = view.findViewById(R.id.buttonA)
+        val view = inflater.inflate(R.layout.fragment_register, container, false)
+
+        // 获取按钮并设置点击监听器
+        val button: TextView = view.findViewById(R.id.tv_go_to_login)
         button.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, Fragment_b())
-                .addToBackStack("Fragment_a_to_Fragment_b")
+                .replace(R.id.fragment_container, LoginFragment.newInstance("param1", "param2"))
+                .addToBackStack(null)
                 .commit()
         }
+
         return view
     }
-
 
     companion object {
         /**
@@ -53,12 +56,12 @@ class Fragment_a : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Fragment_a.
+         * @return A new instance of fragment RegisterFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Fragment_a().apply {
+            RegisterFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
