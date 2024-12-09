@@ -92,7 +92,7 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="630dp"
+        android:layout_marginTop="625dp"
         android:text="Next >"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -103,8 +103,8 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="688dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="680dp"
         android:clickable="true"
         android:focusable="true"
         android:text="Do not have an account? go register"
@@ -112,4 +112,5 @@
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </FrameLayout>

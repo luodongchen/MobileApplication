@@ -1,25 +1,40 @@
 package com.example.homework
 
-class CredentialsManager {
+
+
+import android.util.Patterns
+
+class CredentialManager {
+
+
+    private val credentials: MutableMap<String, String> = mutableMapOf()
 
 
     fun isEmailValid(email: String): Boolean {
-
-        val emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\$".toRegex()
-        return email.matches(emailRegex)
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    fun isPasswordValid(passwd: String): Boolean {
-        // Define the rules for a valid password
-        val minLength = 8
-        val hasUppercase = passwd.any { it.isUpperCase() }
-        val hasLowercase = passwd.any { it.isLowerCase() }
-        val hasDigit = passwd.any { it.isDigit() }
-        val hasSpecialChar = passwd.any { "!@#$%^&*()-_=+<>?".contains(it) }
-        val isValidLength = passwd.length >= minLength
 
-        // Check if all rules are satisfied
-        return hasUppercase && hasLowercase && hasDigit && hasSpecialChar && isValidLength
+    fun isPasswordStrong(password: String): Boolean {
+        val passwordPattern = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$")
+        return passwordPattern.matches(password)
     }
 
+
+    fun isEmailAlreadyRegistered(email: String): Boolean {
+        return credentials.containsKey(email)
+    }
+
+    fun getPassword(email: String): String? {
+        return credentials[email]
+    }
+
+
+    fun register(email: String, password: String): Boolean {
+        if (isEmailAlreadyRegistered(email)) {
+            return false
+        }
+        credentials[email] = password
+        return true
+    }
 }

@@ -1,34 +1,41 @@
 package com.example.homework
 
+
+
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RegisterFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegisterFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
+    private lateinit var sharedViewModel: SharedViewModel
     private var param1: String? = null
     private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            param1 = it.getString(RegisterFragment.ARG_PARAM1)
+            param2 = it.getString(RegisterFragment.ARG_PARAM2)
         }
+    }
+
+    private lateinit var usernameEditText: EditText
+    private lateinit var emailEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var registerButton: Button
+    private lateinit var goToLoginTextView: TextView
+
+    private val credentialManager: CredentialManager by lazy {
+        CredentialManager()
     }
 
     override fun onCreateView(
@@ -37,11 +44,28 @@ class RegisterFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_register, container, false)
 
-        // 获取按钮并设置点击监听器
-        val button: TextView = view.findViewById(R.id.tv_go_to_login)
-        button.setOnClickListener {
+
+        usernameEditText = view.findViewById(R.id.et_username)
+        emailEditText = view.findViewById(R.id.et_email)
+        passwordEditText = view.findViewById(R.id.et_password)
+        registerButton = view.findViewById(R.id.btn_register)
+        goToLoginTextView = view.findViewById(R.id.tv_go_to_login)
+
+
+        registerButton.setOnClickListener {
+            handleRegistration()
+        }
+
+
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        // Update credentials
+
+
+
+        goToLoginTextView.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, LoginFragment.newInstance("param1", "param2"))
+                .replace(R.id.fragment_container, LoginFragment.newInstance("param1","param2"))
                 .addToBackStack(null)
                 .commit()
         }
@@ -49,18 +73,47 @@ class RegisterFragment : Fragment() {
         return view
     }
 
+    private fun handleRegistration() {
+        val email = emailEditText.text.toString()
+        val password = passwordEditText.text.toString()
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(context, "Email and password cannot be empty", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (!sharedViewModel.isEmailValid(email)) {
+            Toast.makeText(context, "Invalid email format", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (!sharedViewModel.isPasswordStrong(password)) {
+            Toast.makeText(context, "Password must be at least 8 characters, include uppercase, lowercase, and a number", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (sharedViewModel.register(email, password)) {
+            Toast.makeText(context, "Registration successful!", Toast.LENGTH_SHORT).show()
+            navigateToLoginPage()
+        } else {
+            Toast.makeText(context, "Email already registered", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun navigateToLoginPage() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, LoginFragment.newInstance("param1", "param2"))
+            .addToBackStack(null)
+            .commit()
+        Toast.makeText(context, "Welcome to the app!", Toast.LENGTH_SHORT).show()
+    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegisterFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+        private const val ARG_PARAM1 = "param1"
+        private const val ARG_PARAM2 = "param2"
+
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: String = "", param2: String = "") =
             RegisterFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
