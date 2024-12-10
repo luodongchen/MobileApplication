@@ -57,7 +57,6 @@ class Register : AppCompatActivity() {
     }
 
 
-
     // Function to validate inputs
     private fun validateInputs(username: String, email: String, phone: String, password: String, termsAccepted: Boolean): Boolean {
         if (TextUtils.isEmpty(username)) {
