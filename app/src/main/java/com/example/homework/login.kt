@@ -27,36 +27,36 @@ class Login : AppCompatActivity() {
         val forgotPasswordTextView = findViewById<TextView>(R.id.tv_forgot_password)
         val rememberMeCheckBox = findViewById<CheckBox>(R.id.checkbox_remember_me)
 
-        // Handle Login Button Click
+
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
 
-            // Validate inputs
+
             if (validateInputs(email, password)) {
-                // Perform login logic (e.g., call API or check credentials)
+
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
 
-                // Navigate to next activity
+
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
         }
 
-        // Navigate to Register Screen
+
         registerTextView.setOnClickListener {
             val intent = Intent(this, Register::class.java)
             startActivity(intent)
         }
 
-        // Handle Forgot Password
+
         forgotPasswordTextView.setOnClickListener {
             Toast.makeText(this, "Forgot Password Clicked", Toast.LENGTH_SHORT).show()
-            // Navigate to Forgot Password Screen (if applicable)
+
         }
     }
 
-    // Function to validate inputs
+
     private fun validateInputs(email: String, password: String): Boolean {
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show()

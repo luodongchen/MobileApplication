@@ -21,7 +21,7 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        // Initialize views
+
         val usernameEditText = findViewById<EditText>(R.id.et_username)
         val emailEditText = findViewById<EditText>(R.id.et_email)
         val phoneEditText = findViewById<EditText>(R.id.et_number)
@@ -30,25 +30,25 @@ class Register : AppCompatActivity() {
         val registerButton = findViewById<Button>(R.id.btn_register)
         val loginTextView = findViewById<TextView>(R.id.tv_go_to_login)
 
-        // Handle Register Button Click
+
         registerButton.setOnClickListener {
             val username = usernameEditText.text.toString().trim()
             val email = emailEditText.text.toString().trim()
             val phone = phoneEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
 
-            // Validate inputs
+
             if (validateInputs(username, email, phone, password, termsCheckBox.isChecked)) {
                 Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show()
 
-                // Navigate to the login screen or next step
+
                 val intent = Intent(this, Login::class.java)
                 startActivity(intent)
                 finish()
             }
         }
 
-        // Navigate to Login Screen
+
         loginTextView.setOnClickListener {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
@@ -56,7 +56,13 @@ class Register : AppCompatActivity() {
         }
     }
 
+
+<<<<<<< HEAD
+
+
+=======
     // Function to validate inputs
+>>>>>>> 2892c93f440223dd3b66ed3d6d89e3161d25c793
     private fun validateInputs(username: String, email: String, phone: String, password: String, termsAccepted: Boolean): Boolean {
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(this, "Please enter your full name", Toast.LENGTH_SHORT).show()
@@ -70,8 +76,8 @@ class Register : AppCompatActivity() {
             Toast.makeText(this, "Please enter a valid 10-digit phone number", Toast.LENGTH_SHORT).show()
             return false
         }
-        if (TextUtils.isEmpty(password) || password.length < 6) {
-            Toast.makeText(this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show()
+        if (TextUtils.isEmpty(password) || password.length < 8) {
+            Toast.makeText(this, "Password must be at least 8 characters long", Toast.LENGTH_SHORT).show()
             return false
         }
         if (!termsAccepted) {
