@@ -104,8 +104,8 @@ class LoginFragment : Fragment() {
         private const val ARG_PARAM1 = "param1"
         private const val ARG_PARAM2 = "param2"
 
-        // Modified newInstance method to accept parameters
-        @JvmStatic
+
+
         fun newInstance(param1: String, param2: String) =
             LoginFragment().apply {
                 arguments = Bundle().apply {

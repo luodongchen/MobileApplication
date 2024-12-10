@@ -13,7 +13,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 
-class FragmentB : Fragment() {
+class FragmentA: Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -30,13 +30,13 @@ class FragmentB : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_b, container, false)
+        val view = inflater.inflate(R.layout.fragment_a, container, false)
 
 
-        val button: Button = view.findViewById(R.id.buttonB)
+        val button: Button = view.findViewById(R.id.buttonA)
         button.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, FragmentA.newInstance("param1", "param2"))
+                .replace(R.id.fragment_container, FragmentB.newInstance("param1", "param2"))
                 .addToBackStack(null)
                 .commit()
         }
@@ -47,7 +47,7 @@ class FragmentB : Fragment() {
     companion object {
 
         fun newInstance(param1: String, param2: String) =
-            FragmentB().apply {
+            FragmentA().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

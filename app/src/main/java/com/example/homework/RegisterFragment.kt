@@ -59,7 +59,7 @@ class RegisterFragment : Fragment() {
 
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
-        // Update credentials
+
 
 
 
@@ -87,10 +87,10 @@ class RegisterFragment : Fragment() {
             return
         }
 
-        if (!sharedViewModel.isPasswordStrong(password)) {
+        /*if (!sharedViewModel.isPasswordStrong(password)) {
             Toast.makeText(context, "Password must be at least 8 characters, include uppercase, lowercase, and a number", Toast.LENGTH_SHORT).show()
             return
-        }
+        }*/
 
         if (sharedViewModel.register(email, password)) {
             Toast.makeText(context, "Registration successful!", Toast.LENGTH_SHORT).show()

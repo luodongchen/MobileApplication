@@ -21,7 +21,7 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        // Initialize views
+
         val usernameEditText = findViewById<EditText>(R.id.et_username)
         val emailEditText = findViewById<EditText>(R.id.et_email)
         val phoneEditText = findViewById<EditText>(R.id.et_number)
@@ -30,25 +30,25 @@ class Register : AppCompatActivity() {
         val registerButton = findViewById<Button>(R.id.btn_register)
         val loginTextView = findViewById<TextView>(R.id.tv_go_to_login)
 
-        // Handle Register Button Click
+
         registerButton.setOnClickListener {
             val username = usernameEditText.text.toString().trim()
             val email = emailEditText.text.toString().trim()
             val phone = phoneEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
 
-            // Validate inputs
+
             if (validateInputs(username, email, phone, password, termsCheckBox.isChecked)) {
                 Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show()
 
-                // Navigate to the login screen or next step
+
                 val intent = Intent(this, Login::class.java)
                 startActivity(intent)
                 finish()
             }
         }
 
-        // Navigate to Login Screen
+
         loginTextView.setOnClickListener {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
@@ -58,7 +58,7 @@ class Register : AppCompatActivity() {
 
 
 
-    // Function to validate inputs
+
     private fun validateInputs(username: String, email: String, phone: String, password: String, termsAccepted: Boolean): Boolean {
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(this, "Please enter your full name", Toast.LENGTH_SHORT).show()
