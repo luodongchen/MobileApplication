@@ -57,12 +57,7 @@ class Register : AppCompatActivity() {
     }
 
 
-<<<<<<< HEAD
 
-
-=======
-    // Function to validate inputs
->>>>>>> 2892c93f440223dd3b66ed3d6d89e3161d25c793
     private fun validateInputs(username: String, email: String, phone: String, password: String, termsAccepted: Boolean): Boolean {
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(this, "Please enter your full name", Toast.LENGTH_SHORT).show()

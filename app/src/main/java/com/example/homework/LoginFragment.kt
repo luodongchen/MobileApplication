@@ -93,10 +93,10 @@ class LoginFragment : Fragment() {
 
     private fun navigateToHomePage() {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, FragmentB.newInstance("param1", "param2"))
+            .replace(R.id.fragment_container, RecipeFragment.newInstance())
             .addToBackStack(null)
             .commit()
-        Toast.makeText(context, "Welcome to the app!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Welcome to the Recipe Page!", Toast.LENGTH_SHORT).show()
     }
 
 
