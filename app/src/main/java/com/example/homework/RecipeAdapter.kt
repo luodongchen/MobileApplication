@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 
 class RecipeAdapter(
     private val recipeList: List<Recipe>,
-    private val listener: InternalMainActivity
+    private val listener: OnRecipeClickListener
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
-    // ViewHolder
+
     class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.recipe_image)
         val title: TextView = itemView.findViewById(R.id.recipe_title)
