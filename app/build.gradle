@@ -30,6 +30,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+
 }
 
 dependencies {
@@ -47,4 +52,11 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+}
+
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:1.9.20"
+        force "org.jetbrains.kotlin:kotlin-reflect:1.9.20"
+    }
 }

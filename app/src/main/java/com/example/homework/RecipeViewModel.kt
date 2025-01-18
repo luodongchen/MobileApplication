@@ -13,7 +13,7 @@ class RecipeViewModel : ViewModel() {
         Recipe(2, "Latte", "A creamy coffee-based beverage", R.drawable.latte),
         Recipe(3, "Espresso", "Strong and concentrated coffee", R.drawable.espresso),
         Recipe(4, "Mocha", "A chocolate-flavored coffee", R.drawable.mocha),
-        Recipe(5, "Americano", "An espresso diluted with hot water", R.drawable.Americano)
+        Recipe(5, "Americano", "An espresso diluted with hot water", R.drawable.americano)
     )
 
     private val _filteredRecipes = MutableStateFlow<List<Recipe>>(_recipes)

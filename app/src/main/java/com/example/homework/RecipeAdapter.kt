@@ -1,44 +1,46 @@
 package com.example.homework
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.homework.databinding.ItemRecipeBinding
+
 class RecipeAdapter(
-    private val recipeList: List<Recipe>,
+    private var recipeList: List<Recipe>,
     private val listener: OnRecipeClickListener
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
-    class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val image: ImageView = itemView.findViewById(R.id.recipe_image)
-        val title: TextView = itemView.findViewById(R.id.recipe_title)
-        val likeButton: Button = itemView.findViewById(R.id.like_button)
-        val shareButton: Button = itemView.findViewById(R.id.share_button)
+
+    class RecipeViewHolder(private val binding: ItemRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(recipe: Recipe, listener: OnRecipeClickListener) {
+            binding.recipeTitle.text = recipe.title
+            binding.description.text = recipe.description
+
+            // Example: Set click listeners
+            binding.likeButton.setOnClickListener { listener.onLikeClick(recipe) }
+            binding.shareButton.setOnClickListener { listener.onShareClick(recipe) }
+            binding.root.setOnClickListener { listener.onRecipeClick(recipe) }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_recipe, parent, false)
-        return RecipeViewHolder(view)
+        val binding = ItemRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return RecipeViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        val recipe = recipeList[position]
-        holder.image.setImageResource(recipe.imageResId)
-        holder.title.text = recipe.title
-
-        holder.itemView.setOnClickListener { listener.onRecipeClick(recipe) }
-        holder.likeButton.setOnClickListener { listener.onLikeClick(recipe) }
-        holder.shareButton.setOnClickListener { listener.onShareClick(recipe) }
+        holder.bind(recipeList[position], listener)
     }
 
     override fun getItemCount(): Int = recipeList.size
+
+    fun updateRecipes(newRecipes: List<Recipe>) {
+        if (recipeList != newRecipes) {
+            recipeList = newRecipes
+            notifyDataSetChanged()
+        }
+    }
 }
-
-
 
 interface OnRecipeClickListener {
     fun onRecipeClick(recipe: Recipe)
