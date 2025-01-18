@@ -7,12 +7,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
 class RecipeAdapter(
     private val recipeList: List<Recipe>,
     private val listener: OnRecipeClickListener
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
-
 
     class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.recipe_image)
@@ -29,28 +27,17 @@ class RecipeAdapter(
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = recipeList[position]
-
         holder.image.setImageResource(recipe.imageResId)
         holder.title.text = recipe.title
 
-
-        holder.itemView.setOnClickListener {
-            listener.onRecipeClick(recipe)
-        }
-
-
-        holder.likeButton.setOnClickListener {
-            listener.onLikeClick(recipe)
-        }
-
-
-        holder.shareButton.setOnClickListener {
-            listener.onShareClick(recipe)
-        }
+        holder.itemView.setOnClickListener { listener.onRecipeClick(recipe) }
+        holder.likeButton.setOnClickListener { listener.onLikeClick(recipe) }
+        holder.shareButton.setOnClickListener { listener.onShareClick(recipe) }
     }
 
     override fun getItemCount(): Int = recipeList.size
 }
+
 
 
 interface OnRecipeClickListener {

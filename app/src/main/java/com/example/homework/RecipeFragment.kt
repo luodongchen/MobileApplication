@@ -1,60 +1,72 @@
 package com.example.homework
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.homework.databinding.FragmentRecipeBinding
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-
-class RecipeFragment : Fragment(), OnRecipeClickListener {
+class RecipeFragment : Fragment() {
+    private lateinit var binding: FragmentRecipeBinding
+    private lateinit var recipeAdapter: RecipeAdapter
+    private val recipeViewModel: RecipeViewModel by lazy {
+        ViewModelProvider(this).get(RecipeViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_recipe, container, false)
-        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
-
-        // Set up RecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        // Set up Adapter
-        val recipeList = getSampleRecipes()
-        recyclerView.adapter = RecipeAdapter(recipeList, this)
-
-        return view
+    ): View {
+        binding = FragmentRecipeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    private fun getSampleRecipes(): List<Recipe> {
-        return listOf(
-            Recipe(1, "Capuccino", R.drawable.capuccino),
-            Recipe(2, "Latte", R.drawable.latte),
-            Recipe(3, "Espresso", R.drawable.espresso)
-        )
+        setupRecyclerView()
+        observeRecipes()
+        setupSearchView()
     }
 
-    // Implementing OnRecipeClickListener interface methods
-    override fun onRecipeClick(recipe: Recipe) {
-        // Handle recipe click (e.g., show details)
-        println("Clicked on recipe: ${recipe.title}")
+    private fun setupRecyclerView() {
+        recipeAdapter = RecipeAdapter(emptyList())
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = recipeAdapter
+        }
     }
 
-    override fun onLikeClick(recipe: Recipe) {
-        // Handle like button click
-        println("Liked recipe: ${recipe.title}")
+    private fun observeRecipes() {
+        lifecycleScope.launch {
+            recipeViewModel.filteredRecipes.collectLatest { recipes ->
+                recipeAdapter.updateRecipes(recipes)
+            }
+        }
     }
 
-    override fun onShareClick(recipe: Recipe) {
-        // Handle share button click
-        println("Shared recipe: ${recipe.title}")
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { recipeViewModel.searchRecipes(it) }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { recipeViewModel.searchRecipes(it) }
+                return true
+            }
+        })
     }
 
     companion object {
-        fun newInstance() = RecipeFragment()
+        fun newInstance(): RecipeFragment = RecipeFragment()
     }
 }

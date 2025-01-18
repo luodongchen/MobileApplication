@@ -1,13 +1,14 @@
 package com.example.homework
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 
@@ -29,10 +30,6 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private val credentialManager: CredentialManager by lazy {
-        CredentialManager()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,11 +46,7 @@ class LoginFragment : Fragment() {
             handleLogin()
         }
 
-
-
-
-        val button: TextView = view.findViewById(R.id.tv_go_to_register)
-        button.setOnClickListener {
+        registerTextView.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, RegisterFragment.newInstance("param1", "param2"))
                 .addToBackStack(null)
@@ -62,8 +55,6 @@ class LoginFragment : Fragment() {
 
         return view
     }
-
-
 
     private fun handleLogin() {
         val email = emailEditText.text.toString()
@@ -91,20 +82,23 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun navigateToInternalMainActivity() {
+        val intent = Intent(requireContext(), InternalMainActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
     private fun navigateToHomePage() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, RecipeFragment.newInstance())
             .addToBackStack(null)
             .commit()
-        Toast.makeText(context, "Welcome to the Recipe Page!", Toast.LENGTH_SHORT).show()
     }
 
 
     companion object {
         private const val ARG_PARAM1 = "param1"
         private const val ARG_PARAM2 = "param2"
-
-
 
         fun newInstance(param1: String, param2: String) =
             LoginFragment().apply {
