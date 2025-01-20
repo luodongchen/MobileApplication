@@ -3,6 +3,8 @@ package com.example.homework
 
 
 import android.util.Patterns
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class CredentialManager {
 
@@ -36,5 +38,12 @@ class CredentialManager {
         }
         credentials[email] = password
         return true
+    }
+
+    private val _isLoggedIn = MutableStateFlow(true)
+    val isLoggedIn: StateFlow<Boolean> = _isLoggedIn
+
+    fun logout() {
+        _isLoggedIn.value = false
     }
 }
